@@ -7,13 +7,15 @@ import { TfiPlus } from "react-icons/tfi";
 import { BsJournalPlus } from "react-icons/bs";
 import { useContext } from "react";
 import { StateContext } from "../context/StatesRun";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Sidebar = () => {
-  const { setIsSidebar, params } = useContext(StateContext);
+  const { setIsSidebar, params, data } = useContext(StateContext);
   const sidebarLinks = [
-    { id: 1, name: "My Day", icon: <HiOutlineSun />, to: "myday" },
-    { id: 2, name: "Important", icon: <AiOutlineStar />, to: "important" },
+    { id: 1, name: "My Day", icon: <HiOutlineSun />, to: "myday",
+  tasks: data?.filter((i) => i.completed === false).length },
+    { id: 2, name: "Important", icon: <AiOutlineStar />, to: "important",
+    tasks: data?.filter((i) =>i.completed === false && i.important === true).length },
     { id: 3, name: "Planned", icon: <SlCalender />, to: "planned" },
     {
       id: 4,
@@ -21,7 +23,7 @@ const Sidebar = () => {
       icon: <MdOutlineAccountCircle />,
       to: "assign_to_me",
     },
-    { id: 5, name: "Tasks", icon: <CiHome />, to: "inbox" },
+    { id: 5, name: "Tasks", icon: <CiHome />, to: "inbox",  tasks: data?.filter((i) => i.completed === false).length},
   ];
 
   return (
@@ -40,7 +42,7 @@ const Sidebar = () => {
         >
           {item.icon}
           <p>
-            {item.name} <span>3</span>
+            {item.name} <span>{item.tasks}</span>
           </p>
         </Link>
       ))}

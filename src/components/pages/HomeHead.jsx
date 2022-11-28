@@ -104,6 +104,9 @@ const HomeHead = () => {
     importanceSort()
   }, [params]);
 
+  const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  const day = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
   return (
     <div className="homeHead">
       <div style={{ display: "inline-flex", width: "100%" }} className={params === "important" || params === "planned" || params === "inbox" ? 'importantHead' : '' || params === "assign_to_me" ? "assign_to_me" : ''}>
@@ -134,7 +137,7 @@ const HomeHead = () => {
         }
       </div>
       {params === "myday" &&
-        <p>monday, november 14 </p>
+        <p>{day[new Date().getDay()]} {months[new Date().getMonth()]} {new Date().getDate()} </p>
       }
     </div>
   );

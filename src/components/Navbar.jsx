@@ -22,7 +22,7 @@ const Navbar = () => {
   const Settings = () => (
     <>
       <h1>
-        Settings{" "}
+        Settings
         <span onClick={() => setIsNav({settings: false})}>
           <MdClose />
         </span>
@@ -35,7 +35,7 @@ const Navbar = () => {
             <div style={{ display: "flex", gap: "8px" }}>
               <button className={toggleButton && "on"}>
                 <span />
-              </button>{" "}
+              </button>
               <p>{toggleButton ? "On" : "Off"}</p>
             </div>
           </li>
@@ -50,7 +50,7 @@ const Navbar = () => {
             >
               <button className={toggleButton && "on"}>
                 <span />
-              </button>{" "}
+              </button>
               <p>{toggleButton ? "On" : "Off"}</p>
             </div>
           </li>

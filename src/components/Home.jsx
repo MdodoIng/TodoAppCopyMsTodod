@@ -21,7 +21,7 @@ const Home = () => {
   } = useContext(StateContext);
   const { taskOption } = useParams();
   const navigate = useNavigate();
-  
+
   const [isClicked, setIsClicked] = useState(false);
 
   useMemo(() => setParams(taskOption), [taskOption]);
@@ -52,8 +52,54 @@ const Home = () => {
     }
   }, [currentUser]);
 
-  const taskNotCompleted = data?.filter((i) => i.completed === false);
-  const taskCompleted = data?.filter((i) => i.completed === true);
+  const taskNotCompleted = data
+    ?.filter((i) => i.completed === false)
+    .sort(taskSort);
+  const taskCompleted = data
+    ?.filter((i) => i.completed === true)
+    .sort(taskSort);
+
+  function taskSort(a, b) {
+    if (sortValue === "") {
+      return 0;
+    }
+    if (sortValue === "Important") {
+      if (a.important < b.important) {
+        return 1;
+      }
+      if (a.important > b.important) {
+        return -1;
+      }
+      return 0;
+    }
+    if (sortValue === "Due time") {
+      if (a.dueDate < b.dueDate) {
+        return -1;
+      }
+      if (a.dueDate > b.dueDate) {
+        return 1;
+      }
+      return 0;
+    }
+    if (sortValue === "Creation Date") {
+      if (a.date < b.date) {
+        return -1;
+      }
+      if (a.date > b.date) {
+        return 1;
+      }
+      return 0;
+    }
+    if (sortValue === "Alphabetically") {
+      if (a.taskText < b.taskText) {
+        return -1;
+      }
+      if (a.taskText > b.taskText) {
+        return 1;
+      }
+      return 0;
+    }
+  }
 
   return (
     <div className="homeContainer">
