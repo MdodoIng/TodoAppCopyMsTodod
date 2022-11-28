@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import { useContext, useState } from "react";
+import { Routes, Route, BrowserRouter as Router, useParams, Navigate, useNavigate } from "react-router-dom";
+import { Auth, Home, Loading, Navbar, Sidebar, Suggestion } from "./components";
+import { StateContext } from "./context/StatesRun";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => {
+  const { isSidebar, isSuggestion, isLoading, currentUser } = useContext(StateContext)
+
+  console.log(isLoading);
+
+    
+
+  if (isLoading) {
+    return <Loading />
+  } else if (!isLoading) return (
+    <Router >
+      <div className="app">
+        <Navbar />
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
+          {isSidebar &&
+            <Sidebar />
+          }
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/task/:taskOption" element={<Home />} />
+            <Route path="/auth" element={<Auth />} />
+          </Routes>
+          {isSuggestion &&
+            <Suggestion />
+          }
+        </div>
+      </div>
+    </Router>
+  )
+};
 
 export default App;
