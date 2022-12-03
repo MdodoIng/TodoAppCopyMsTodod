@@ -4,8 +4,11 @@ import { IoIosArrowDown, IoIosClose } from "react-icons/io";
 import { useNavigate, useParams } from "react-router";
 import { StateContext } from "../context/StatesRun";
 import { AddTask, HomeHead, TaskViewer } from "./";
+import { TaskSort } from "../context/sort";
+
 
 const Home = () => {
+  const [isClicked, setIsClicked] = useState(false);
   const {
     isLoading,
     setIsLoading,
@@ -22,9 +25,12 @@ const Home = () => {
   const { taskOption } = useParams();
   const navigate = useNavigate();
 
-  const [isClicked, setIsClicked] = useState(false);
 
-  useMemo(() => setParams(taskOption), [taskOption]);
+
+  const handleSorted = () => {
+    setIsAddTask(false);
+    setSortValue("");
+  };
 
   const sortedBy = () => {
     switch (sortValue) {
@@ -38,70 +44,29 @@ const Home = () => {
         return "by created time";
     }
   };
-
-  const handleSorted = () => {
-    setIsAddTask(false);
-    setSortValue("");
-  };
+  
+  
+  const taskNotCompleted = data
+  ?.filter((i) => i.completed === false)
+  .sort(TaskSort);
+  const taskCompleted = data
+  ?.filter((i) => i.completed === true)
+  .sort(TaskSort);
+  
   useMemo(() => sortedBy(), [sortValue]);
 
   useEffect(() => {
-    if (currentUser === null) {
-      navigate("/auth");
-      setIsLoading(false);
+    if( taskOption){
+      setParams(taskOption)
     }
-  }, [currentUser]);
+  }, [taskOption]);
+  
 
-  const taskNotCompleted = data
-    ?.filter((i) => i.completed === false)
-    .sort(taskSort);
-  const taskCompleted = data
-    ?.filter((i) => i.completed === true)
-    .sort(taskSort);
 
-  function taskSort(a, b) {
-    if (sortValue === "") {
-      return 0;
-    }
-    if (sortValue === "Important") {
-      if (a.important < b.important) {
-        return 1;
-      }
-      if (a.important > b.important) {
-        return -1;
-      }
-      return 0;
-    }
-    if (sortValue === "Due time") {
-      if (a.dueDate < b.dueDate) {
-        return -1;
-      }
-      if (a.dueDate > b.dueDate) {
-        return 1;
-      }
-      return 0;
-    }
-    if (sortValue === "Creation Date") {
-      if (a.date < b.date) {
-        return -1;
-      }
-      if (a.date > b.date) {
-        return 1;
-      }
-      return 0;
-    }
-    if (sortValue === "Alphabetically") {
-      if (a.taskText < b.taskText) {
-        return -1;
-      }
-      if (a.taskText > b.taskText) {
-        return 1;
-      }
-      return 0;
-    }
-  }
-
-  return (
+  if (currentUser === null) {
+    navigate("/auth");
+    setIsLoading(false);
+  } else return (
     <div className="homeContainer">
       <HomeHead />
       <div className="home_Contents">

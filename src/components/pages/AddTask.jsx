@@ -23,7 +23,7 @@ const AddTask = () => {
     const taskText = e.target[0].value;
     if (taskText.length > 0 && currentUser) {
       try {
-        await addDoc(collection(db, `todo_${currentUser.email}`), {
+        await addDoc(collection(db, `todo_${currentUser?.email}`), {
           id: "id" + new Date().getTime(),
           taskText: taskText,
           user: currentUser.uid,
@@ -34,7 +34,8 @@ const AddTask = () => {
           repeat: false,
           completed: false,
         });
-        console.log("oke set");
+        setAddTaskValue({taskText: ''})
+        
       } catch (error) {
         console.log(error);
       }
@@ -65,10 +66,10 @@ const AddTask = () => {
           <input
             type="text"
             placeholder="Add a task"
-            value={addTaskValue.taskText}
             onChange={(e) =>
               setAddTaskValue({ ...addTaskValue, taskText: e.target.value })
             }
+            value={addTaskValue?.taskText}
           />
         </form>
       </li>
@@ -91,7 +92,7 @@ const AddTask = () => {
           </button>
         </div>
         <button
-          className={addTaskValue.taskText?.length > 0 ? "btnActive" : ""}
+          className={addTaskValue?.taskText?.length > 0 ? "btnActive" : ""}
         >
           Add
         </button>

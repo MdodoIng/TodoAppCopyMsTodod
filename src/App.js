@@ -4,10 +4,7 @@ import { Auth, Home, Loading, Navbar, Sidebar, Suggestion } from "./components";
 import { StateContext } from "./context/StatesRun";
 
 const App = () => {
-  const { isSidebar, isSuggestion, isLoading, currentUser } = useContext(StateContext)
-
-  console.log(isLoading);
-
+  const { isSidebar, isSuggestion, isLoading, currentUser, selectedTask } = useContext(StateContext)
     
 
   if (isLoading) {
@@ -25,7 +22,7 @@ const App = () => {
             <Route path="/task/:taskOption" element={<Home />} />
             <Route path="/auth" element={<Auth />} />
           </Routes>
-          {isSuggestion &&
+          {(isSuggestion || selectedTask) &&
             <Suggestion />
           }
         </div>
