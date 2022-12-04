@@ -9,14 +9,14 @@ import { db } from "../../Firebase";
 
 const TaskUncompleted = ({dueDate, id, important,remained
   ,repeat  , taskText , completed }) => {
-   const { currentUser, isActive, setIsActive } = useContext(StateContext);
+   const { currentUser, isActive, setIsActive, setSelectedTask } = useContext(StateContext);
 
 
     const handelComplete = async () => {
       if ( completed === false) {
 
         try {
-          await updateDoc(doc(db, `todo_${currentUser.email}`, id), {
+          await updateDoc(doc(db, `todo_${currentUser?.email}`, id), {
             completed: true
           })
         } catch (error) {
@@ -25,7 +25,7 @@ const TaskUncompleted = ({dueDate, id, important,remained
         }
       } else if (completed === true) {
         try {
-          await updateDoc(doc(db, `todo_${currentUser.email}`, id), {
+          await updateDoc(doc(db, `todo_${currentUser?.email}`, id), {
             completed: false
           })
         } catch (error) {
@@ -40,7 +40,7 @@ const TaskUncompleted = ({dueDate, id, important,remained
     const handleImportance = async () => {
       if ( important === false) {
         try {
-          await updateDoc(doc(db, `todo_${currentUser.email}`, id), {
+          await updateDoc(doc(db, `todo_${currentUser?.email}`, id), {
             important: true
           })
         } catch (error) {
@@ -49,7 +49,7 @@ const TaskUncompleted = ({dueDate, id, important,remained
         }
       } else if (important === true) {
         try {
-          await updateDoc(doc(db, `todo_${currentUser.email}`, id), {
+          await updateDoc(doc(db, `todo_${currentUser?.email}`, id), {
             important: false
           })
         } catch (error) {
@@ -78,7 +78,7 @@ const TaskUncompleted = ({dueDate, id, important,remained
         </>
           ) : <BsCheckCircleFill/>}
       </div>
-      <div>
+      <div onClick={() => setSelectedTask(id)}>
         <p>{taskText}</p>
         <span>
           <small>Tasks</small>

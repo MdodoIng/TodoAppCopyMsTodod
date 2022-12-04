@@ -3,7 +3,9 @@ import { BsPlus } from "react-icons/bs";
 import { IoIosArrowDown, IoIosClose } from "react-icons/io";
 import { useNavigate, useParams } from "react-router";
 import { StateContext } from "../context/StatesRun";
-import { AddTask, HomeHead, TaskViewer } from "./";
+import { AddTask, HomeHead, TaskViewer, SearchTask } from "./";
+import { TaskSort } from "../context/sort";
+
 
 const Home = () => {
   const {
@@ -17,14 +19,19 @@ const Home = () => {
     setSortValue,
     sortValue,
     currentUser,
+    isSearching,
     data,
   } = useContext(StateContext);
   const { taskOption } = useParams();
   const navigate = useNavigate();
-  
+
   const [isClicked, setIsClicked] = useState(false);
 
-  useMemo(() => setParams(taskOption), [taskOption]);
+
+  const handleSorted = () => {
+    setIsAddTask(false);
+    setSortValue("");
+  };
 
   const sortedBy = () => {
     switch (sortValue) {
@@ -38,24 +45,32 @@ const Home = () => {
         return "by created time";
     }
   };
+  
+  
+  const taskNotCompleted = data
+  ?.filter((i) => i.completed === false)
+  .sort(TaskSort);
+  const taskCompleted = data
+  ?.filter((i) => i.completed === true)
+  .sort(TaskSort);
+  
 
-  const handleSorted = () => {
-    setIsAddTask(false);
-    setSortValue("");
-  };
+  
+  useMemo(() => setParams(taskOption), [taskOption]);
   useMemo(() => sortedBy(), [sortValue]);
 
   useEffect(() => {
     if (currentUser === null) {
+
       navigate("/auth");
-      setIsLoading(false);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 180);
     }
   }, [currentUser]);
 
-  const taskNotCompleted = data?.filter((i) => i.completed === false);
-  const taskCompleted = data?.filter((i) => i.completed === true);
-
-  return (
+  if (isSearching) return <SearchTask />
+  else return (
     <div className="homeContainer">
       <HomeHead />
       <div className="home_Contents">

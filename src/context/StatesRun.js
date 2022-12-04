@@ -12,38 +12,49 @@ export const StateContextProvider = ({ children }) => {
   const [isSuggestion, setIsSuggestion] = useState(false);
   const [isNav, setIsNav] = useState({});
   const [isAddTask, setIsAddTask] = useState(false);
-  const [addTaskValue, setAddTaskValue] = useState({});
+  const [addTaskValue, setAddTaskValue] = useState(null);
   const [params, setParams] = useState("myday");
   const [currentUser, setCurrentUser] = useState({});
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isActive, setIsActive] = useState(null);
+  const [selectedTask, setSelectedTask] = useState('');
+  const [isSearching, setIsSearching] = useState('koi');
+  
 
   useEffect(() => {
     const unSub = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
       console.log(user);
     });
-
-    const q = query(collection(db, `todo_${currentUser.email}`), orderBy('date', 'desc'));
-
-
-    const unData = onSnapshot(q, (querySnapshot) => {
-      let dataAll = [];
-      querySnapshot.forEach((doc) => {
-        dataAll.push({ ...doc.data(), id: doc.id });
-      });
-      setData(dataAll);
-    });
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 800);
-
     return () => {
       unSub();
-      unData();
     };
-  }, [currentUser]);
+  }, []);
+
+useEffect(() => {
+  const q = query(
+    collection(db, `todo_${currentUser?.email}`),
+    orderBy("date", "desc"),
+  );
+
+  const unData = onSnapshot(q, (querySnapshot) => {
+    let dataAll = [];
+    querySnapshot.forEach((doc) => {
+      dataAll.push({ ...doc.data(), id: doc.id });
+    });
+    setData(dataAll);
+    if (dataAll) {
+        setIsLoading(false);
+    }
+  });
+
+  return () => {
+    unData();
+  };
+}, [currentUser]);
+
+
   console.log(data);
 
   return (
@@ -71,6 +82,9 @@ export const StateContextProvider = ({ children }) => {
         currentUser,
         isActive,
         setIsActive,
+        selectedTask,
+        setSelectedTask,
+        isSearching, setIsSearching
       }}
     >
       {children}

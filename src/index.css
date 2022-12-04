@@ -542,6 +542,7 @@
   padding: 20px 14px 0;
   background-color: white;
   cursor: default;
+  z-index: 12;
   box-shadow: -1px 0px 12px 0.5px #00000036;
   animation: suggestionContainer .5s ease;
 }
@@ -794,6 +795,7 @@ margin-top: 12px;
   top: 0;
   right: 0;
   background-color:#dddbdd;
+  
 }
 .authContent {
   width: 300px;
@@ -803,26 +805,30 @@ margin-top: 12px;
   box-shadow: 0 0 1px -.5px rgba(66, 65, 65, 0.5);
   height: 400px;
   background-color: #ffffff;
+  align-items: center;
   padding: 40px 18px;
+  
 }
+
 .authContent form {
   display: flex;
   width: 100%;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: 8px;
 }
 .authContent form input {
   background-color: #e6e6e6;
   width: 100%;
   outline: none;
-  border: none;
+  border:  1px solid rgb(194, 192, 192);
   border-radius: 4px;
   height: 40px;
-  padding-left: 4px;
+  padding-left: 8px;
   font-size: 14px;
   font-weight: 300;
+  
 }
 .flex {
   display: flex;
@@ -836,8 +842,9 @@ margin-top: 12px;
   height: 40px;
   padding-left: 4px;
   font-size: 14px;
-  font-weight: 300;
+  font-weight: 700;
   transition: .3s ease-in;
+  letter-spacing: 1px;
 }
 .authContent form button:hover {
   background-color: #2564cf;
@@ -846,9 +853,10 @@ margin-top: 12px;
 
 .authContent  h3 {
   font-size: 18px;
-  font-weight: 400;
+  font-weight: 600;
   color: #141414;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
+  color: #2564cf;
 }
 .authContent  p {
   font-size: 14px;
@@ -868,4 +876,97 @@ margin-top: 12px;
   font-size: 14px;
   font-weight: 500;
   color: #421616;
+}
+
+.task_last-buttons {
+  display: grid;
+  grid-auto-flow: column;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 30px;
+}
+.task_last-buttons button{
+  padding: 8px 13px;
+  background-color: rgb(57, 84, 236);
+border: none;
+border-radius: 4px;
+color: white;
+font-size: 14px ;
+font-weight: 300;
+transition:  .3s ease-in;
+}
+.task_last-buttons button:hover{
+  background-color: rgb(46, 107, 238);
+}
+.task_last-buttons button:disabled{
+  opacity: .5;
+}
+.task_last-buttons button:disabled:hover{
+  background-color: rgb(57, 84, 236);
+}
+
+.signWithGoogle {
+  width: 100%;
+  outline: none;
+  border: none;
+  border-radius: 4px;
+  height: 40px;
+  padding-left: 4px;
+  font-size: 14px;
+  font-weight: 700;
+  transition: .3s ease-in;
+  letter-spacing: 1px;
+  margin-top: 8px;
+  background-color: rgb(46, 107, 238);
+  color: white;
+}
+.signWithGoogle:hover {
+  background-color: rgb(79, 130, 241);
+}
+
+@media ( max-width: 640px) {
+  .sidebar-container {
+    position: absolute;
+    left: 0;
+    top: 44px;
+    z-index: 4;
+  }
+  .sidebar-containerBacMob {
+    position: absolute;
+    right: 0;
+    top: 44px;
+    z-index: 4;
+    background-color: #00000099;
+    width: 100%;
+    height: 100%;
+  }
+  .suggestionContainer {
+    position: absolute;
+    right: 0;
+    top:44px
+  }
+  .nav-search svg{
+    width: 50px;
+    cursor: pointer;
+  }
+
+  .nav-search  {
+    padding: 0;
+    position: relative;
+  }
+  .nav-search  input{
+    position: absolute;
+    height:30px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .nav-search  input:focus{
+    position: absolute;
+    width: 200px;
+    background-color: white;
+    left: 42px;
+    height:30px;
+    border-radius: 4px;
+  }
+  
 }

@@ -1,8 +1,10 @@
 import {
   createUserWithEmailAndPassword,
+  GoogleAuthProvider,
   signInWithEmailAndPassword,
+  signInWithRedirect,
 } from "firebase/auth";
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { StateContext } from "../context/StatesRun";
 import { auth } from "../Firebase";
@@ -47,18 +49,26 @@ const Auth = () => {
           switch (error.code) {
             case "auth/wrong-password":
               alert("The password is wrong.");
-
               break;
             case "auth/user-not-found":
               alert("user not found");
-
-            default:
-              break;
           }
         }
       }
     }
   };
+
+  const signWithGoogle = async () => {
+    const provider = new GoogleAuthProvider()
+    try {
+      await signInWithRedirect(auth, provider)
+      
+    } catch (error) {
+      console.log(error);
+      
+    }
+
+  }
 
   return (
     <div className="AuthContainer">
@@ -70,9 +80,10 @@ const Auth = () => {
           {!isLogin && <input type="text" placeholder="Confirm Password" />}
           <button>{isLogin ? "Log in" : "Sign Up"}</button>
         </form>
-        <p>already have an account? <span onClick={() => setIsLogin(!isLogin)}>
-          {!isLogin ? "Log in" : "Sign Up"}
-        </span></p>
+        <button onClick={signWithGoogle} className="signWithGoogle" title="ഇത്  ചെലപ്പോ വർക്ക് ആവ്വോള്ളു അപ്പൊ നൂകിം കണ്ടൊക്കെയാ നടക്കാ ">Login with Google</button>
+
+        <p>{isLogin ? " don't have any account?" : "already have an account?"} <span onClick={() => setIsLogin(!isLogin)}>{isLogin ? "Sign In" : "Login"}</span>
+        </p>
       </div>
     </div>
   );
