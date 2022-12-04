@@ -19,6 +19,8 @@ export const StateContextProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isActive, setIsActive] = useState(null);
   const [selectedTask, setSelectedTask] = useState('');
+  const [isSearching, setIsSearching] = useState('koi');
+  
 
   useEffect(() => {
     const unSub = onAuthStateChanged(auth, (user) => {
@@ -82,6 +84,7 @@ useEffect(() => {
         setIsActive,
         selectedTask,
         setSelectedTask,
+        isSearching, setIsSearching
       }}
     >
       {children}

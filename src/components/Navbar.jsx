@@ -1,23 +1,29 @@
 import { MdCampaign, MdClose, MdOutlineApps } from "react-icons/md";
 import { IoMdHelp, IoMdSearch, IoMdSettings } from "react-icons/io";
 import { RiAccountCircleFill } from "react-icons/ri";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { StateContext } from "../context/StatesRun";
 import {signOut} from "firebase/auth";
 import { auth } from "../Firebase";
 import { useNavigate } from "react-router";
 
 const Navbar = () => {
+  const [toggleButton, setToggleButton] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
+  
+  
   const navigate = useNavigate()
   const {
-    isNav, setIsNav
+    isNav, setIsNav, currentUser,  setIsSearching
   } = useContext(StateContext);
 
   const isSignOut = () => {
     signOut(auth)
     setIsNav({feature: false})
-    // navigate('/auth')
+    navigate('/auth')
   }
+  console.log(currentUser);
+  
 
   const Settings = () => (
     <>
@@ -104,7 +110,7 @@ const Navbar = () => {
         <img src="" alt="" />
       <div style={{display: 'grid'}}>
         <h4>username</h4>
-        <p>email</p>
+        <p>{currentUser?.email}</p>
         <a href="">Edit</a>
       </div>
       </div>
@@ -119,7 +125,19 @@ const Navbar = () => {
       setIsNav({...isNav, user:false})
     }
   }
-  const toggleButton = 0;
+
+  const searchHandel = (e) => {
+    e.preventDefault()
+    const searchText = e.target[0].value
+    setIsSearching(searchText)
+    setSearchValue('')
+  }
+
+  const handleChange = (e) => {
+
+    setSearchValue(e.target.value)
+    setIsSearching(e.target.value)
+  }
   return (
     <>
       <div className="navbar-container">
@@ -129,9 +147,9 @@ const Navbar = () => {
           </button>
           <p>To Do</p>
         </div>
-        <form className="nav-search">
+        <form className="nav-search" onSubmit={searchHandel}>
           <IoMdSearch color="#2564cf" />
-          <input placeholder="Search" />
+          <input placeholder="Search"  value={searchValue} onChange={handleChange}/>
         </form>
         <div style={{ display: "inline-flex" }}>
           <button

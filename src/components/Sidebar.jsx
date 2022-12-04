@@ -27,6 +27,8 @@ const Sidebar = () => {
   ];
 
   return (
+    <>
+    <div className="sidebar-containerBacMob"/>
     <div className="sidebar-container">
       <span className="sidebarMenuBtn">
         <AiOutlineMenu onClick={() => setIsSidebar(false)} />
@@ -35,9 +37,7 @@ const Sidebar = () => {
         <Link
           to={`task/${item.to}`}
           key={item.id}
-          className={
-            params === item.to ? "sideCategory active" : "sideCategory"
-          }
+          className={params === item.to ? "sideCategory active" : "sideCategory"}
           onClick={() => setIsSidebar(false)}
         >
           {item.icon}
@@ -57,6 +57,7 @@ const Sidebar = () => {
         </span>
       </div>
     </div>
+    </>
   );
 };
 

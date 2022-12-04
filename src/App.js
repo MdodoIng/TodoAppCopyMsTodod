@@ -9,7 +9,7 @@ const App = () => {
 
   if (isLoading) {
     return <Loading />
-  } else if (!isLoading) return (
+  } else return (
     <Router >
       <div className="app">
         <Navbar />

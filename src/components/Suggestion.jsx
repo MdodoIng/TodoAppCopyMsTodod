@@ -35,6 +35,7 @@ const Suggestion = () => {
 
   return (
     <>
+    <div className="sidebar-containerBacMob" />
       {isSuggestion &&
 
         <div className="suggestionContainer">
