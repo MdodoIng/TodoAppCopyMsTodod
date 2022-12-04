@@ -59,14 +59,14 @@ const Auth = () => {
   };
 
   const signWithGoogle = async () => {
-    const provider = new GoogleAuthProvider()
-    try {
-      await signInWithRedirect(auth, provider)
+    // const provider = new GoogleAuthProvider()
+    // try {
+    //   await signInWithRedirect(auth, provider)
       
-    } catch (error) {
-      console.log(error);
+    // } catch (error) {
+    //   console.log(error);
       
-    }
+    // }
 
   }
 

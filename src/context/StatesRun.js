@@ -19,7 +19,7 @@ export const StateContextProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isActive, setIsActive] = useState(null);
   const [selectedTask, setSelectedTask] = useState('');
-  const [isSearching, setIsSearching] = useState('koi');
+  const [isSearching, setIsSearching] = useState('');
   
 
   useEffect(() => {

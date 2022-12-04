@@ -6,6 +6,7 @@ import {initializeApp} from "firebase/app";
 
 const firebaseConfig = {
   apiKey:process.env.REACT_APP_FIREBASE_API_KEY,
+  apiKey: "AIzaSyBFuTHbzNEezPYoBzWVPodDaAxZf4XGnVU",
   authDomain: "todo-list-2022-1eed4.firebaseapp.com",
   databaseURL: "https://todo-list-2022-1eed4-default-rtdb.asia-southeast1.firebasedatabase.app",
   projectId: "todo-list-2022-1eed4",
