@@ -61,7 +61,6 @@ const Home = () => {
 
   useEffect(() => {
     if (currentUser === null) {
-
       navigate("/auth");
       setTimeout(() => {
         setIsLoading(false);
